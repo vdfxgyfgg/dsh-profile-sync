@@ -187,6 +187,7 @@ window.__ModuleLoader__.load({
           h('div', { 'data-ps-title': '' }, '备份仓库'),
           h('div', { 'data-ps-sub': '' }, '插件配置、本地插件源码、记忆都会传到这个仓库。建议设成私有仓库：只要写 owner/repo，仓库不存在时点上传会自动建一个私有的。'),
           h('div', { 'data-ps-row': '' },
+            h('span', { 'data-ps-sub': '', style: { minWidth: '46px' } }, '仓库'),
             h('div', { 'data-ps-grow': '' },
               h('input', {
                 'data-ps-input': '',
@@ -194,9 +195,9 @@ window.__ModuleLoader__.load({
                 placeholder: 'vdfxgyfgg/dsh-profile-backup',
                 spellCheck: false,
                 onChange: (e) => setRepo(e.target.value),
-              })),
-            h('span', { 'data-ps-sub': '' }, 'token')),
+              }))),
           h('div', { 'data-ps-row': '' },
+            h('span', { 'data-ps-sub': '', style: { minWidth: '46px' } }, 'token'),
             h('div', { 'data-ps-grow': '' },
               h('input', {
                 'data-ps-input': '',
