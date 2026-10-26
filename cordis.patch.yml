@@ -1,0 +1,13 @@
+# ============================================================================
+# dsh-profile-sync —— DSH bundle patch（插件自带的挂载声明）
+# ============================================================================
+# 装上之后，profile 只要在 `dsh.profile.bundles` 里列出本包名即生效：
+#
+#   dsh plugin --profile desktop add github:NEWJO123/dsh-profile-sync
+# ============================================================================
+
+- insert:
+    - id: profile-sync        # ⭐ 必须等于命名空间名
+      name: dsh-profile-sync
+      config:
+        enabled: true

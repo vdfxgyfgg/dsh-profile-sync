@@ -1,0 +1,51 @@
+{
+  "name": "dsh-profile-sync",
+  "version": "0.1.0",
+  "description": "DSH 插件：把这台机器的插件清单、配置、记忆一键上传到自己的私有仓库；换新电脑装上本插件，点一下就全部拉取部署好。",
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "backup",
+    "sync",
+    "profile"
+  ],
+  "license": "MIT",
+  "type": "module",
+  "main": "index.js",
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "client.js",
+    "cordis.patch.yml",
+    "lib",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "dsh": ">=0.1.7-rc.1",
+    "node": ">=22"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": [
+        "@deepseek-ai/dsh-client-runtime",
+        "@deepseek-ai/dsh-client-ui-settings",
+        "@deepseek-ai/dsh-client-ui-settings-plugins"
+      ]
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vdfxgyfgg/dsh-profile-sync.git"
+  },
+  "homepage": "https://github.com/vdfxgyfgg/dsh-profile-sync#readme"
+}
