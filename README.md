@@ -55,6 +55,8 @@ vdfxgyfgg/dsh-profile-sync
    - Repository access：All repositories（或只勾那两个仓库）
    - Permissions → Repository permissions → **Contents: Read and write**；建仓库还需要 **Administration: Read and write**（想省事就用 classic token 勾 `repo` 这一项）
 3. 面板里填仓库 `owner/repo` + token → **保存**。token 只写在本机 `~/.dsh/profile-sync/config.json`，不进仓库也不进插件配置。
+   - **token 不用搬机器**：GitHub 上的 token 创建后不能再看，新电脑上直接**重新建一个** token（同样勾 `repo`）就行，两个 token 都能用。
+   - 也可以把 token 存成 `~/.dsh/sync-token.txt`（直接粘一行），插件会自己读。
 4. 老机器点 **上传本机配置**。几十秒，日志里会显示文件数、体积和 commit。
 5. 新电脑：装插件 → 填同一个仓库和 token → **从仓库拉取并部署** → **手动重启 DSH**。
 
