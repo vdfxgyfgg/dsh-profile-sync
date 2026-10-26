@@ -23,7 +23,14 @@
 
 ## 装法
 
-**推荐（新电脑上不需要装 git）**：在 DSH 的终端里跑一条命令
+**最省事：双击一个 bat（不用 git，也不用会用命令行）**
+
+把 `tools/install-plugin.bat` 和 `tools/install-plugin.ps1` 两个文件放到新电脑同一个文件夹里，双击 `install-plugin.bat`。
+它会自己从注册表/常见目录找到 DSH 装在哪，调用 DSH 自带的 pnpm 把插件装上，最后校验 profile 清单是否登记成功。
+
+（`install-plugin.bat` 只写 ASCII + CRLF，避免 cmd 代码页把中文吞掉；中文提示都在 `.ps1` 里，那个文件必须保持 **UTF-8 带 BOM**。）
+
+**命令行版（等价）**：
 
 ```bat
 dsh plugin --profile desktop add https://cdn.jsdelivr.net/gh/vdfxgyfgg/dsh-profile-sync@main/dist/dsh-profile-sync.tgz
