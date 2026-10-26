@@ -32,8 +32,8 @@ export const inject = ['webServer']
 const VERSION = '0.1.0'
 const DEFAULT_REPO = 'vdfxgyfgg/dsh-profile-backup'
 /* 本插件自己的安装源：用 tarball 地址而不是 github: —— pnpm 解析 github: 要靠 git，
- * 而新电脑往往没装 git。raw.githubusercontent 的 .tgz 走纯 HTTPS，装得上。 */
-const SELF_SPEC = 'https://raw.githubusercontent.com/vdfxgyfgg/dsh-profile-sync/main/dist/dsh-profile-sync.tgz'
+ * 而新电脑往往没装 git。走 jsDelivr（它镜像同一仓库文件；裸 github raw 在国内实测 23s 起） */
+const SELF_SPEC = 'https://cdn.jsdelivr.net/gh/vdfxgyfgg/dsh-profile-sync@main/dist/dsh-profile-sync.tgz'
 const API = 'https://api.github.com'
 
 /** github:owner/repo#ref → codeload tarball（纯 HTTPS，不需要装 git） */

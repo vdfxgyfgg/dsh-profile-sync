@@ -26,6 +26,13 @@
 **推荐（新电脑上不需要装 git）**：在 DSH 的终端里跑一条命令
 
 ```bat
+dsh plugin --profile desktop add https://cdn.jsdelivr.net/gh/vdfxgyfgg/dsh-profile-sync@main/dist/dsh-profile-sync.tgz
+```
+
+国内直连 `raw.githubusercontent.com` 实测 20 秒起、还常断，所以走 jsDelivr 镜像（同一个仓库文件）。
+连 jsDelivr 也不通时，换回 GitHub 原地址：
+
+```bat
 dsh plugin --profile desktop add https://raw.githubusercontent.com/vdfxgyfgg/dsh-profile-sync/main/dist/dsh-profile-sync.tgz
 ```
 
