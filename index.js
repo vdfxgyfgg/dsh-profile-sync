@@ -31,8 +31,17 @@ export const inject = ['webServer']
 
 const VERSION = '0.1.0'
 const DEFAULT_REPO = 'vdfxgyfgg/dsh-profile-backup'
-const SELF_SPEC = 'github:vdfxgyfgg/dsh-profile-sync'
+/* 本插件自己的安装源：用 tarball 地址而不是 github: —— pnpm 解析 github: 要靠 git，
+ * 而新电脑往往没装 git。raw.githubusercontent 的 .tgz 走纯 HTTPS，装得上。 */
+const SELF_SPEC = 'https://raw.githubusercontent.com/vdfxgyfgg/dsh-profile-sync/main/dist/dsh-profile-sync.tgz'
 const API = 'https://api.github.com'
+
+/** github:owner/repo#ref → codeload tarball（纯 HTTPS，不需要装 git） */
+function gitFreeSpec(spec) {
+  const m = /^github:([^#\s]+)(?:#(\S+))?$/.exec(spec)
+  if (!m) return spec
+  return `https://codeload.github.com/${m[1]}/tar.gz/${m[2] || 'main'}`
+}
 
 const DSH_HOME = process.env.DSH_HOME || join(homedir(), '.dsh')
 const STATE_DIR = join(DSH_HOME, 'profile-sync')
@@ -213,6 +222,17 @@ function buildPayload(cfg, log) {
   }
   /* 本插件自己必须留在清单里：否则新机拉完重启会被 pnpm 当成多余依赖 prune 掉 */
   pkg.dependencies['dsh-profile-sync'] = SELF_SPEC
+
+  /* github: 依赖同样要过 git，改成免 git 的 codeload tarball 地址 */
+  for (const [dep, spec] of Object.entries(pkg.dependencies)) {
+    if (typeof spec !== 'string' || !spec.startsWith('github:')) continue
+    const next = gitFreeSpec(spec)
+    if (next !== spec) {
+      pkg.dependencies[dep] = next
+      log(`github 依赖 ${dep} 改走 tarball（免 git）`)
+    }
+  }
+
   pkg.dsh = pkg.dsh || {}
   pkg.dsh.profile = pkg.dsh.profile || {}
   if (!Array.isArray(pkg.dsh.profile.bundles)) pkg.dsh.profile.bundles = []
