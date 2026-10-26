@@ -23,17 +23,23 @@
 
 ## 装法
 
+**推荐（新电脑上不需要装 git）**：在 DSH 的终端里跑一条命令
+
 ```bat
-dsh plugin --profile desktop add github:vdfxgyfgg/dsh-profile-sync
+dsh plugin --profile desktop add https://raw.githubusercontent.com/vdfxgyfgg/dsh-profile-sync/main/dist/dsh-profile-sync.tgz
 ```
 
-或者更简单：插件市场 → 安装 → 输入框里直接填
+**插件市场**：市场 → 安装 → 输入框填
 
 ```
 vdfxgyfgg/dsh-profile-sync
 ```
 
-（市场支持 `owner/repo` 简写，会转成 `github:` 源。）装完重启一次 DSH，设置里就多出「插件同步」一页。
+> 市场这条走的是 `github:` 源，pnpm 解析它需要机器上装了 **git**；没有 git 会报
+> `Failed to resolve git dependency ... 'git' 不是内部或外部命令`。所以新电脑上没 git 就用上面那条 tarball 命令。
+> 同理，本插件上传时会把清单里所有 `github:` 依赖改写成 `codeload` 的 tarball 地址，新机安装同样不需要 git。
+
+装完重启一次 DSH，设置里就多出「插件同步」一页。
 
 ## 用法
 
@@ -89,9 +95,19 @@ manifest.json     清单：profile 名、依赖表、来源机器、生成时间
 ## 已知限制
 
 - 只搬 **UTF-8 文本文件**（配置、记忆、插件源码都满足）；二进制资源不搬。
-- 依赖安装用的是 DSH 自带的 pnpm（`dsh plugin --profile <名> install`），新机不需要另装 Node/pnpm。
+- 依赖安装用的是 DSH 自带的 pnpm（`dsh plugin --profile <名> install`），新机不需要另装 Node/pnpm，也**不需要 git**（清单里的 `github:` 依赖已改写成 tarball 地址）。
 - 恢复后**必须重启 DSH**：插件文件不能在自己跑着的时候热替换。
 - 上传按「整棵树替换」提交（不带 base_tree），所以仓库里不会残留已删除的旧文件。
+- 新机首次安装依赖大约几分钟（270 个包，看网速），之后都是增量。
+- 抖音插件的 Python venv（`.venv`）不搬：新机上它的 `pythonPath` 指向的 venv 需要你自己建一次（`python -m venv <DSH_HOME>\douyin-duty\.venv` 并装依赖），不建只影响抖音那一个插件，不影响其它插件和 DSH 启动。
+
+## 开发
+
+```
+node .dev/publish.mjs     # pnpm pack + 把源码和 dist/*.tgz 推到公开仓库（REST，不需要 git）
+node .dev/live.mjs        # 用真 token 跑一次真实上传
+node .dev/live-restore.mjs # 从真仓库还原到 F:\A1895\Projects\dsh-sync-home（模拟新电脑）
+```
 
 ## 许可
 
